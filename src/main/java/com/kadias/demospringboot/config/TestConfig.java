@@ -2,10 +2,12 @@ package com.kadias.demospringboot.config;
 
 import com.kadias.demospringboot.entities.Category;
 import com.kadias.demospringboot.entities.Order;
+import com.kadias.demospringboot.entities.OrderItem;
 import com.kadias.demospringboot.entities.Product;
 import com.kadias.demospringboot.entities.User;
 import com.kadias.demospringboot.entities.enums.OrderStatus;
 import com.kadias.demospringboot.repositories.CategoryRepository;
+import com.kadias.demospringboot.repositories.OrderItemRepository;
 import com.kadias.demospringboot.repositories.OrderRepository;
 import com.kadias.demospringboot.repositories.ProductRepository;
 import com.kadias.demospringboot.repositories.UserRepository;
@@ -31,6 +33,8 @@ public class TestConfig implements org.springframework.boot.CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
 
     @Override
@@ -38,6 +42,7 @@ public class TestConfig implements org.springframework.boot.CommandLineRunner {
         Category cat1 = new Category(null, "Electronics");
         Category cat2 = new Category(null, "Books");
         Category cat3 = new Category(null, "Computers");
+
 
 
         Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
@@ -67,6 +72,14 @@ public class TestConfig implements org.springframework.boot.CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.SHIPPED, u1);
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+
+        OrderItem oil = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem (o1, p3, 1, p4.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p1.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oil, oi2, oi3, oi4));
 
     }
 }

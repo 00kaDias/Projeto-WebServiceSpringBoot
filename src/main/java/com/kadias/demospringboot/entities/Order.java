@@ -2,19 +2,23 @@ package com.kadias.demospringboot.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kadias.demospringboot.entities.enums.OrderStatus;
+import com.kadias.demospringboot.entities.pk.OrderItemPK;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,6 +38,9 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+    @Setter(lombok.AccessLevel.NONE)
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order() {
     }
@@ -54,7 +61,6 @@ public class Order implements Serializable {
             this.orderStatus = orderStatus.getCode();
         }
     }
-
 
     @Override
     public boolean equals(Object o) {
