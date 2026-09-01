@@ -1,0 +1,7 @@
+package com.kadias.demospringboot.repositories;
+
+import com.kadias.demospringboot.entities.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+}
