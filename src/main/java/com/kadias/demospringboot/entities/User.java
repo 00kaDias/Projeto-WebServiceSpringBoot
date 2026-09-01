@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_user")
 @Getter
+@Setter
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -25,6 +27,7 @@ public class User implements Serializable {
     private String email;
     private String password;
 
+    @Setter(lombok.AccessLevel.NONE)
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
