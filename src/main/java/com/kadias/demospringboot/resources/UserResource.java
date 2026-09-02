@@ -3,6 +3,7 @@ package com.kadias.demospringboot.resources;
 import com.kadias.demospringboot.entities.User;
 import com.kadias.demospringboot.services.UserServices;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +47,11 @@ public class UserResource {
                .toUri();
 
         return ResponseEntity.created(uri).body(user);
+    }
+
+   @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userServices.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
