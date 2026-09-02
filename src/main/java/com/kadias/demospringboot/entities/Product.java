@@ -26,9 +26,14 @@ import java.util.Set;
 @Setter
 
 public class Product implements Serializable {
+
+
     private static final long serialVersionUID = 1L;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
     private String name;
     private String description;
@@ -39,8 +44,10 @@ public class Product implements Serializable {
     @ManyToMany
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id")
             , inverseJoinColumns = @JoinColumn(name = "category_id"))
+
     @Setter(AccessLevel.NONE)
     private Set<Category> categories = new HashSet<>();
+
 
     @OneToMany(mappedBy = "id.product")
     @Setter(AccessLevel.NONE)

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,21 +20,30 @@ import java.util.List;
 @Getter
 @Setter
 public class User implements Serializable {
+
+
     private static final long serialVersionUID = 1L;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+
     private Long id;
     private String name;
     private String email;
     private String password;
+
 
     @Setter(lombok.AccessLevel.NONE)
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
+
     public User() {
     }
+
 
     public User(Long id, String name, String email, String password) {
         this.id = id;

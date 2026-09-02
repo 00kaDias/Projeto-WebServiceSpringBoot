@@ -5,53 +5,57 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "tb_category")
 @Getter
 @Setter
-public class Category implements Serializable {
+@Table(name = "tb_payment")
+public class Payment implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
+    @Setter(lombok.AccessLevel.NONE)
     private Long id;
-    private String name;
+    private Instant moment;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "categories")
-    @Setter(AccessLevel.NONE)
-    private Set<Product> products = new HashSet<>();
+    @OneToOne
+    @MapsId
+    private Order order;
 
 
-    public Category() {
+    public Payment() {
     }
 
-    public Category(Long id, String name) {
+
+    public Payment(Long id, Instant moment, Order order) {
         this.id = id;
-        this.name = name;
+        this.moment = moment;
+        this.order = order;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Category category)) return false;
-        return id == category.id;
+        if (!(o instanceof Payment payment)) return false;
+        return Objects.equals(id, payment.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
+
+

@@ -3,6 +3,7 @@ package com.kadias.demospringboot.config;
 import com.kadias.demospringboot.entities.Category;
 import com.kadias.demospringboot.entities.Order;
 import com.kadias.demospringboot.entities.OrderItem;
+import com.kadias.demospringboot.entities.Payment;
 import com.kadias.demospringboot.entities.Product;
 import com.kadias.demospringboot.entities.User;
 import com.kadias.demospringboot.entities.enums.OrderStatus;
@@ -81,5 +82,8 @@ public class TestConfig implements org.springframework.boot.CommandLineRunner {
 
         orderItemRepository.saveAll(Arrays.asList(oil, oi2, oi3, oi4));
 
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);
+        orderRepository.save(o1);
     }
 }
